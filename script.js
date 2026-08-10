@@ -19,14 +19,15 @@ calcBtn.addEventListener("click", async function () {
   const weight = parseFloat(document.getElementById("weight").value) || 0;
   let rate = parseFloat(document.getElementById("rate").value) || 0;
   const platformFeePercent = parseFloat(document.getElementById("platformFee").value) || 0;
-let customs = parseFloat(document.getElementById("customs").value) || 0;
+  const platformFlatFee = parseFloat(document.getElementById("platformFlatFee").value) || 0;
+  let customs = parseFloat(document.getElementById("customs").value) || 0;
   const currency = currencySelect.value;
 
   if (currency === "CNY") {
     try {
       const response = await fetch("https://api.frankfurter.dev/v2/rate/CNY/USD");
-const data = await response.json();
-const cnyToUsd = data.rate;
+      const data = await response.json();
+      const cnyToUsd = data.rate;
 
       cost = cost * cnyToUsd;
       rate = rate * cnyToUsd;
@@ -40,7 +41,7 @@ const cnyToUsd = data.rate;
   const shippingCost = weight * rate;
   const totalRevenue = sell * qty;
   const platformFeeAmount = totalRevenue * (platformFeePercent / 100);
-  const totalCost = cost + shippingCost + customs + platformFeeAmount;
+  const totalCost = cost + shippingCost + customs + platformFeeAmount + platformFlatFee;
   const profit = totalRevenue - totalCost;
 
   resultText.textContent = "> profit: $" + profit.toFixed(2);

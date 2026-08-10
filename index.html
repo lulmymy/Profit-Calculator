@@ -19,30 +19,33 @@
       <option value="USD">USD ($)</option>
       <option value="CNY">CNY (¥)</option>
     </select>
-  
-    <label for="cost">Total Base Cost (<span class="currency-symbol">¥</span>)</label>
-<input type="number" id="cost" step="any" placeholder="e.g. 500">
-  
-    <label for="sell">Selling Price per Item ($)</label>
-    <input type: type="number" step="any" id="sell" placeholder="e.g. 25">
-  
-    <label for="qty">Quantity</label>
-    <input type: type="number" step="any" id="qty" placeholder="e.g. 1">
-  
-    <label for="weight">Weight (kg)</label>
-    <input type: type="number" step="any" id="weight" placeholder="e.g. 2">
-  
-    <label for="rate">Shipping Rate (<span class="currency-symbol">$</span> per kg)</label>
-    <input type: type="number" step="any" id="rate" placeholder="e.g. 5">
-  
-    <label for="platformFee">Platform Fee (%)</label>
-<input type="number" id="platformFee" step="any" placeholder="e.g. 10">
 
-<label for="customs">Customs/Import Tax (<span class="currency-symbol">$</span> flat)</label>
-<input type="number" id="customs" step="any" placeholder="e.g. 20">
-  
+    <label for="cost">Total Base Cost (<span class="currency-symbol">¥</span>)</label>
+    <input type="number" id="cost" step="any" placeholder="e.g. 500">
+
+    <label for="sell">Selling Price per Item ($)</label>
+    <input type="number" id="sell" step="any" placeholder="e.g. 25">
+
+    <label for="qty">Quantity</label>
+    <input type="number" id="qty" step="any" placeholder="e.g. 1">
+
+    <label for="weight">Weight (kg)</label>
+    <input type="number" id="weight" step="any" placeholder="e.g. 2">
+
+    <label for="rate">Shipping Rate (<span class="currency-symbol">$</span> per kg)</label>
+    <input type="number" id="rate" step="any" placeholder="e.g. 5">
+
+    <label for="platformFee">Platform Fee (%)</label>
+    <input type="number" id="platformFee" step="any" placeholder="e.g. 10">
+
+    <label for="platformFlatFee">Platform Flat Fee ($ per sale)</label>
+    <input type="number" id="platformFlatFee" step="any" value="0.45">
+
+    <label for="customs">Customs/Import Tax (<span class="currency-symbol">$</span> flat)</label>
+    <input type="number" id="customs" step="any" placeholder="e.g. 20">
+
     <button id="calcBtn">Calculate Profit</button>
-  
+
     <div class="terminal">
       <div class="terminal-header">
         <span></span><span></span><span></span>
