@@ -14,6 +14,9 @@
   <h1>Know Your Margin.<br><span class="gradient-text">Before You List It.</span></h1>
 
   <div class="card">
+    <label for="itemName">Item Name</label>
+    <input type="text" id="itemName" placeholder="e.g. Vintage Jacket">
+
     <label for="currency">Currency</label>
     <select id="currency">
       <option value="USD">USD ($)</option>
@@ -44,7 +47,14 @@
     <label for="customs">Customs/Import Tax (<span class="currency-symbol">$</span> flat)</label>
     <input type="number" id="customs" step="any" placeholder="e.g. 20">
 
-    <button id="calcBtn">Calculate Profit</button>
+    <button id="calcBtn">Add Item</button>
+
+    <div class="edit-bar" id="editBar">
+      <button type="button" id="editBtn">Make Changes</button>
+      <button type="button" id="saveChangesBtn">Save Changes</button>
+      <button type="button" id="cancelEditBtn">Cancel</button>
+      <button type="button" id="newItemBtn">+ New Item</button>
+    </div>
 
     <div class="terminal">
       <div class="terminal-header">
@@ -55,6 +65,24 @@
         <div>$ run calculate-profit</div>
         <div id="result" class="terminal-result">&gt; awaiting input...</div>
       </div>
+    </div>
+
+    <div class="items-list">
+      <table id="itemsTable">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Qty</th>
+            <th>Profit</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="itemsTableBody"></tbody>
+      </table>
+    </div>
+
+    <div class="grand-total">
+      Grand Total: <span id="grandTotal">$0.00</span>
     </div>
   </div>
 

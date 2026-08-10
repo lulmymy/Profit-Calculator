@@ -1,6 +1,20 @@
 const calcBtn = document.getElementById("calcBtn");
 const currencySelect = document.getElementById("currency");
 const currencySymbols = document.querySelectorAll(".currency-symbol");
+const itemsTableBody = document.getElementById("itemsTableBody");
+const grandTotalEl = document.getElementById("grandTotal");
+
+const editBar = document.getElementById("editBar");
+const editBtn = document.getElementById("editBtn");
+const saveChangesBtn = document.getElementById("saveChangesBtn");
+const cancelEditBtn = document.getElementById("cancelEditBtn");
+const newItemBtn = document.getElementById("newItemBtn");
+
+const formFields = ["itemName", "currency", "cost", "sell", "qty", "weight", "rate", "platformFee", "platformFlatFee", "customs"];
+
+let items = [];
+let itemCounter = 0;
+let editingItemId = null;
 
 currencySelect.addEventListener("change", function () {
   const symbol = currencySelect.value === "CNY" ? "¥" : "$";
@@ -9,7 +23,7 @@ currencySelect.addEventListener("change", function () {
   });
 });
 
-calcBtn.addEventListener("click", async function () {
+async function calculateProfit() {
   const resultText = document.getElementById("result");
   resultText.textContent = "> calculating...";
 
@@ -28,13 +42,12 @@ calcBtn.addEventListener("click", async function () {
       const response = await fetch("https://api.frankfurter.dev/v2/rate/CNY/USD");
       const data = await response.json();
       const cnyToUsd = data.rate;
-
       cost = cost * cnyToUsd;
       rate = rate * cnyToUsd;
       customs = customs * cnyToUsd;
     } catch (error) {
       resultText.textContent = "> error fetching exchange rate";
-      return;
+      return null;
     }
   }
 
@@ -46,4 +59,163 @@ calcBtn.addEventListener("click", async function () {
 
   resultText.textContent = "> profit: $" + profit.toFixed(2);
   resultText.style.color = profit < 0 ? "#E2574C" : "#A855F7";
+
+  return profit;
+}
+
+function getRawFormValues() {
+  return {
+    name: document.getElementById("itemName").value || "Untitled Item",
+    currency: currencySelect.value,
+    cost: document.getElementById("cost").value,
+    sell: document.getElementById("sell").value,
+    qty: document.getElementById("qty").value,
+    weight: document.getElementById("weight").value,
+    rate: document.getElementById("rate").value,
+    platformFee: document.getElementById("platformFee").value,
+    platformFlatFee: document.getElementById("platformFlatFee").value,
+    customs: document.getElementById("customs").value
+  };
+}
+
+function loadValuesIntoForm(values) {
+  document.getElementById("itemName").value = values.name;
+  currencySelect.value = values.currency;
+  document.getElementById("cost").value = values.cost;
+  document.getElementById("sell").value = values.sell;
+  document.getElementById("qty").value = values.qty;
+  document.getElementById("weight").value = values.weight;
+  document.getElementById("rate").value = values.rate;
+  document.getElementById("platformFee").value = values.platformFee;
+  document.getElementById("platformFlatFee").value = values.platformFlatFee;
+  document.getElementById("customs").value = values.customs;
+
+  const symbol = values.currency === "CNY" ? "¥" : "$";
+  currencySymbols.forEach(function (el) {
+    el.textContent = symbol;
+  });
+}
+
+function setFieldsDisabled(disabled) {
+  formFields.forEach(function (id) {
+    document.getElementById(id).disabled = disabled;
+  });
+}
+
+function clearForm() {
+  formFields.forEach(function (id) {
+    const el = document.getElementById(id);
+    if (el.tagName === "SELECT") {
+      el.value = "USD";
+    } else if (id === "platformFlatFee") {
+      el.value = "0.45";
+    } else {
+      el.value = "";
+    }
+  });
+}
+
+calcBtn.addEventListener("click", async function () {
+  const profit = await calculateProfit();
+  if (profit === null) return;
+
+  itemCounter++;
+  const raw = getRawFormValues();
+  raw.id = Date.now();
+  raw.number = itemCounter;
+  raw.profit = profit;
+  items.push(raw);
+
+  clearForm();
+  renderItemsTable();
 });
+
+itemsTableBody.addEventListener("click", function (e) {
+  if (e.target.classList.contains("item-link")) {
+    const id = parseInt(e.target.getAttribute("data-id"));
+    const item = items.find(function (i) { return i.id === id; });
+    if (!item) return;
+
+    editingItemId = id;
+    loadValuesIntoForm(item);
+    setFieldsDisabled(true);
+    calcBtn.style.display = "none";
+    editBar.style.display = "flex";
+    editBtn.style.display = "block";
+    saveChangesBtn.style.display = "none";
+    cancelEditBtn.style.display = "none";
+    newItemBtn.style.display = "block";
+  }
+
+  if (e.target.classList.contains("remove-btn")) {
+    const idToRemove = parseInt(e.target.getAttribute("data-id"));
+    items = items.filter(function (item) { return item.id !== idToRemove; });
+    renderItemsTable();
+  }
+});
+
+editBtn.addEventListener("click", function () {
+  setFieldsDisabled(false);
+  editBtn.style.display = "none";
+  saveChangesBtn.style.display = "block";
+  cancelEditBtn.style.display = "block";
+  newItemBtn.style.display = "none";
+});
+
+saveChangesBtn.addEventListener("click", async function () {
+  const profit = await calculateProfit();
+  if (profit === null) return;
+
+  const raw = getRawFormValues();
+  const index = items.findIndex(function (i) { return i.id === editingItemId; });
+  if (index !== -1) {
+    raw.id = editingItemId;
+    raw.number = items[index].number;
+    raw.profit = profit;
+    items[index] = raw;
+  }
+
+  exitEditMode();
+  renderItemsTable();
+});
+
+cancelEditBtn.addEventListener("click", function () {
+  const item = items.find(function (i) { return i.id === editingItemId; });
+  if (item) loadValuesIntoForm(item);
+  setFieldsDisabled(true);
+  editBtn.style.display = "block";
+  saveChangesBtn.style.display = "none";
+  cancelEditBtn.style.display = "none";
+  newItemBtn.style.display = "block";
+});
+
+newItemBtn.addEventListener("click", function () {
+  exitEditMode();
+});
+
+function exitEditMode() {
+  editingItemId = null;
+  setFieldsDisabled(false);
+  clearForm();
+  calcBtn.style.display = "block";
+  editBar.style.display = "none";
+}
+
+function renderItemsTable() {
+  itemsTableBody.innerHTML = "";
+
+  items.forEach(function (item) {
+    const row = document.createElement("tr");
+    row.innerHTML =
+      '<td><span class="item-link" data-id="' + item.id + '">#' + item.number + " — " + item.name + "</span></td>" +
+      "<td>" + item.qty + "</td>" +
+      "<td>$" + item.profit.toFixed(2) + "</td>" +
+      '<td><button class="remove-btn" data-id="' + item.id + '">✕</button></td>';
+    itemsTableBody.appendChild(row);
+  });
+
+  const grandTotal = items.reduce(function (sum, item) {
+    return sum + item.profit;
+  }, 0);
+  grandTotalEl.textContent = "$" + grandTotal.toFixed(2);
+}
