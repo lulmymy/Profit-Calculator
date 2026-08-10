@@ -1,0 +1,139 @@
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #0A0A0B;
+  color: #F5F5F7;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  margin: 0;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.badge {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: #A855F7;
+  border: 1px solid #22252B;
+  background-color: #111113;
+  padding: 6px 14px;
+  border-radius: 20px;
+  margin-bottom: 24px;
+}
+
+h1 {
+  font-size: 40px;
+  font-weight: 800;
+  line-height: 1.2;
+  margin: 0 0 30px;
+  max-width: 500px;
+}
+
+.gradient-text {
+  background: linear-gradient(90deg, #7C3AED, #A855F7);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.card {
+  background-color: #111113;
+  border: 1px solid #22252B;
+  border-radius: 12px;
+  padding: 30px;
+  width: 320px;
+  text-align: left;
+}
+
+label {
+  display: block;
+  margin-top: 16px;
+  font-size: 13px;
+  color: #8B8D93;
+}
+
+input {
+  width: 100%;
+  box-sizing: border-box;
+  background-color: #0A0A0B;
+  border: 1px solid #22252B;
+  color: #F5F5F7;
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  padding: 10px;
+  margin-top: 6px;
+  border-radius: 6px;
+}
+
+input:focus {
+  outline: none;
+  border-color: #A855F7;
+}
+
+button {
+  width: 100%;
+  margin-top: 20px;
+  padding: 12px;
+  background-color: #F5F5F7;
+  color: #0A0A0B;
+  border: none;
+  border-radius: 8px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #d8d8db;
+}
+
+.terminal {
+  margin-top: 20px;
+  background-color: #0A0A0B;
+  border: 1px solid #22252B;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.terminal-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  background-color: #111113;
+  border-bottom: 1px solid #22252B;
+}
+
+.terminal-header span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #333;
+}
+
+.terminal-title {
+  margin-left: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: #8B8D93;
+  width: auto !important;
+  height: auto !important;
+  border-radius: 0 !important;
+  background: none !important;
+}
+
+.terminal-body {
+  padding: 14px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: #8B8D93;
+}
+
+.terminal-result {
+  margin-top: 6px;
+  color: #A855F7;
+}
