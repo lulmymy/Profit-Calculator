@@ -251,3 +251,14 @@
   .forgot-link:hover {
     color: #A855F7;
   }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .logo-icon {
+    width: 22px;
+    height: 22px;
+  }
