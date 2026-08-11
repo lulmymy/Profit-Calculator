@@ -314,3 +314,18 @@ td {
 .home-link:hover {
   color: #A855F7;
 }
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: #F5F5F7;
+  font-weight: 800;
+  font-size: 16px;
+}
+
+.logo-icon {
+  width: 22px;
+  height: 22px;
+}
