@@ -4,13 +4,39 @@ const currencySymbols = document.querySelectorAll(".currency-symbol");
 const itemsTableBody = document.getElementById("itemsTableBody");
 const grandTotalEl = document.getElementById("grandTotal");
 
+const marketplaceSelect = document.getElementById("marketplace");
+const platformFeeInput = document.getElementById("platformFee");
+const platformFlatFeeInput = document.getElementById("platformFlatFee");
+
+const marketplacePresets = {
+  depop: { fee: 3.3, flat: 0.45 },
+  ebay: { fee: 13.6, flat: 0.40 },
+  vinted: { fee: 0, flat: 0 },
+  facebook: { fee: 10, flat: 0 }
+};
+
+marketplaceSelect.addEventListener("change", function () {
+  const choice = marketplaceSelect.value;
+
+  if (choice === "custom") {
+    platformFeeInput.disabled = false;
+    platformFlatFeeInput.disabled = false;
+  } else {
+    const preset = marketplacePresets[choice];
+    platformFeeInput.value = preset.fee;
+    platformFlatFeeInput.value = preset.flat;
+    platformFeeInput.disabled = true;
+    platformFlatFeeInput.disabled = true;
+  }
+});
+
 const editBar = document.getElementById("editBar");
 const editBtn = document.getElementById("editBtn");
 const saveChangesBtn = document.getElementById("saveChangesBtn");
 const cancelEditBtn = document.getElementById("cancelEditBtn");
 const newItemBtn = document.getElementById("newItemBtn");
 
-const formFields = ["itemName", "currency", "cost", "sell", "qty", "weight", "rate", "platformFee", "platformFlatFee", "customs"];
+const formFields = ["marketplace", "itemName", "currency", "cost", "sell", "qty", "weight", "rate", "platformFee", "platformFlatFee", "customs"];
 
 let items = [];
 let itemCounter = 0;
@@ -65,6 +91,7 @@ async function calculateProfit() {
 
 function getRawFormValues() {
   return {
+    marketplace: marketplaceSelect.value,
     name: document.getElementById("itemName").value || "Untitled Item",
     currency: currencySelect.value,
     cost: document.getElementById("cost").value,
@@ -79,6 +106,7 @@ function getRawFormValues() {
 }
 
 function loadValuesIntoForm(values) {
+  marketplaceSelect.value = values.marketplace;
   document.getElementById("itemName").value = values.name;
   currencySelect.value = values.currency;
   document.getElementById("cost").value = values.cost;
@@ -105,7 +133,11 @@ function setFieldsDisabled(disabled) {
 function clearForm() {
   formFields.forEach(function (id) {
     const el = document.getElementById(id);
-    if (el.tagName === "SELECT") {
+    if (id === "marketplace") {
+      el.value = "custom";
+      platformFeeInput.disabled = false;
+      platformFlatFeeInput.disabled = false;
+    } else if (el.tagName === "SELECT") {
       el.value = "USD";
     } else if (id === "platformFlatFee") {
       el.value = "0.45";
@@ -115,7 +147,59 @@ function clearForm() {
   });
 }
 
+async function loadUserItems() {
+  const loaded = await window.firestoreLoadItems();
+  if (loaded.length > 0) {
+    items = loaded;
+    itemCounter = Math.max.apply(null, items.map(function (i) { return i.number; }));
+    renderItemsTable();
+  }
+}
+window.loadUserItems = loadUserItems;
+
+function syncToCloud() {
+  if (window.firestoreSaveItems) {
+    window.firestoreSaveItems(items);
+  }
+}
+
+function validateForm() {
+  const errors = [];
+
+  const sell = parseFloat(document.getElementById("sell").value);
+  const qty = parseFloat(document.getElementById("qty").value);
+  const cost = parseFloat(document.getElementById("cost").value);
+  const weight = parseFloat(document.getElementById("weight").value) || 0;
+  const rate = parseFloat(document.getElementById("rate").value) || 0;
+  const platformFee = parseFloat(document.getElementById("platformFee").value) || 0;
+  const customs = parseFloat(document.getElementById("customs").value) || 0;
+
+  if (!sell || sell <= 0) errors.push("Selling price must be greater than $0.");
+  if (!qty || qty <= 0) errors.push("Quantity must be at least 1.");
+  if (isNaN(cost) || cost < 0) errors.push("Base cost can't be negative.");
+  if (weight < 0) errors.push("Weight can't be negative.");
+  if (rate < 0) errors.push("Shipping rate can't be negative.");
+  if (customs < 0) errors.push("Customs/import tax can't be negative.");
+  if (platformFee < 0 || platformFee > 100) errors.push("Platform fee must be between 0–100%.");
+
+  return errors;
+}
+
+function showErrors(errors) {
+  const errorBox = document.getElementById("errorBox");
+  if (errors.length === 0) {
+    errorBox.classList.remove("visible");
+    errorBox.innerHTML = "";
+    return;
+  }
+  errorBox.innerHTML = "<ul>" + errors.map(function (e) { return "<li>" + e + "</li>"; }).join("") + "</ul>";
+  errorBox.classList.add("visible");
+}
+
 calcBtn.addEventListener("click", async function () {
+  const errors = validateForm();
+  showErrors(errors);
+  if (errors.length > 0) return;
   const profit = await calculateProfit();
   if (profit === null) return;
 
@@ -125,6 +209,7 @@ calcBtn.addEventListener("click", async function () {
   raw.number = itemCounter;
   raw.profit = profit;
   items.push(raw);
+  syncToCloud();
 
   clearForm();
   renderItemsTable();
@@ -150,8 +235,33 @@ itemsTableBody.addEventListener("click", function (e) {
   if (e.target.classList.contains("remove-btn")) {
     const idToRemove = parseInt(e.target.getAttribute("data-id"));
     items = items.filter(function (item) { return item.id !== idToRemove; });
+    syncToCloud();
     renderItemsTable();
   }
+});
+
+document.querySelector(".card").addEventListener("click", function (e) {
+  if (e.target.classList.contains("clear-field-btn")) {
+    const targetId = e.target.getAttribute("data-target");
+    document.getElementById(targetId).value = "";
+  }
+});
+
+const clearFormBtn = document.getElementById("clearFormBtn");
+clearFormBtn.addEventListener("click", function () {
+  clearForm();
+  showErrors([]);
+});
+
+const clearAllBtn = document.getElementById("clearAllBtn");
+clearAllBtn.addEventListener("click", function () {
+  const confirmed = confirm("Remove all saved items? This can't be undone.");
+  if (!confirmed) return;
+
+  items = [];
+  itemCounter = 0;
+  syncToCloud();
+  renderItemsTable();
 });
 
 editBtn.addEventListener("click", function () {
@@ -163,6 +273,9 @@ editBtn.addEventListener("click", function () {
 });
 
 saveChangesBtn.addEventListener("click", async function () {
+  const errors = validateForm();
+  showErrors(errors);
+  if (errors.length > 0) return;
   const profit = await calculateProfit();
   if (profit === null) return;
 
@@ -174,6 +287,7 @@ saveChangesBtn.addEventListener("click", async function () {
     raw.profit = profit;
     items[index] = raw;
   }
+  syncToCloud();
 
   exitEditMode();
   renderItemsTable();

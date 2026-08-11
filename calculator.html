@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Reseller Profit Calculator</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <nav class="calc-navbar">
+    <a href="index.html" class="home-link">← Home</a>
+    <a href="patch-notes.html" class="home-link">Patch Notes</a>
+  </nav>
+  
+  <div class="badge">● CALCULATOR STATUS: READY</div>
+
+  <h1>Know Your Margin.<br><span class="gradient-text">Before You List It.</span></h1>
+
+  <div class="card">
+    <label for="marketplace">Marketplace</label>
+    <select id="marketplace">
+      <option value="custom">Custom</option>
+      <option value="depop">Depop</option>
+      <option value="ebay">eBay</option>
+      <option value="vinted">Vinted</option>
+      <option value="facebook">Facebook Marketplace</option>
+    </select>
+
+    <label for="itemName">Item Name</label>
+    <div class="input-wrap">
+      <input type="text" id="itemName" placeholder="e.g. Vintage Jacket">
+      <button type="button" class="clear-field-btn" data-target="itemName">✕</button>
+    </div>
+
+    <label for="currency">Currency</label>
+    <select id="currency">
+      <option value="USD">USD ($)</option>
+      <option value="CNY">CNY (¥)</option>
+      <option value="GBP">GBP (£)</option>
+      <option value="EUR">EUR (€)</option>
+      <option value="MXN">MXN ($)</option>
+      <option value="INR">INR (₹)</option>
+    </select>
+
+    <label for="cost">Total Base Cost (<span class="currency-symbol">¥</span>)</label>
+    <div class="input-wrap">
+      <input type="number" id="cost" step="any" placeholder="e.g. 500">
+      <button type="button" class="clear-field-btn" data-target="cost">✕</button>
+    </div>
+
+    <label for="sell">Selling Price per Item ($)</label>
+    <div class="input-wrap">
+      <input type="number" id="sell" step="any" placeholder="e.g. 25">
+      <button type="button" class="clear-field-btn" data-target="sell">✕</button>
+    </div>
+
+    <label for="qty">Quantity</label>
+    <div class="input-wrap">
+      <input type="number" id="qty" step="any" placeholder="e.g. 1">
+      <button type="button" class="clear-field-btn" data-target="qty">✕</button>
+    </div>
+
+    <label for="weight">Weight (kg)</label>
+    <div class="input-wrap">
+      <input type="number" id="weight" step="any" placeholder="e.g. 2">
+      <button type="button" class="clear-field-btn" data-target="weight">✕</button>
+    </div>
+
+    <label for="rate">Shipping Rate (<span class="currency-symbol">$</span> per kg)</label>
+    <div class="input-wrap">
+      <input type="number" id="rate" step="any" placeholder="e.g. 5">
+      <button type="button" class="clear-field-btn" data-target="rate">✕</button>
+    </div>
+
+    <label for="platformFee">Platform Fee (%)</label>
+    <div class="input-wrap">
+      <input type="number" id="platformFee" step="any" placeholder="e.g. 10">
+      <button type="button" class="clear-field-btn" data-target="platformFee">✕</button>
+    </div>
+
+    <label for="platformFlatFee">Platform Flat Fee ($ per sale)</label>
+    <div class="input-wrap">
+      <input type="number" id="platformFlatFee" step="any" value="0.45">
+      <button type="button" class="clear-field-btn" data-target="platformFlatFee">✕</button>
+    </div>
+
+    <label for="customs">Customs/Import Tax (<span class="currency-symbol">$</span> flat)</label>
+    <div class="input-wrap">
+      <input type="number" id="customs" step="any" placeholder="e.g. 20">
+      <button type="button" class="clear-field-btn" data-target="customs">✕</button>
+    </div>
+
+    <button id="calcBtn">Add Item</button>
+    <button type="button" id="clearFormBtn" class="clear-form-btn">Clear Form</button>
+
+    <div id="errorBox" class="error-box"></div>
+
+    <div class="edit-bar" id="editBar">
+      <button type="button" id="editBtn">Make Changes</button>
+      <button type="button" id="saveChangesBtn">Save Changes</button>
+      <button type="button" id="cancelEditBtn">Cancel</button>
+      <button type="button" id="newItemBtn">+ New Item</button>
+    </div>
+
+    <div class="terminal">
+      <div class="terminal-header">
+        <span></span><span></span><span></span>
+        <span class="terminal-title">profit@calc — zsh</span>
+      </div>
+      <div class="terminal-body">
+        <div>$ run calculate-profit</div>
+        <div id="result" class="terminal-result">&gt; awaiting input...</div>
+      </div>
+    </div>
+
+    <div class="items-list">
+      <table id="itemsTable">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Qty</th>
+            <th>Profit</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="itemsTableBody"></tbody>
+      </table>
+    </div>
+
+    <div class="grand-total">
+      Grand Total: <span id="grandTotal">$0.00</span>
+    </div>
+
+    <button type="button" id="clearAllBtn" class="clear-all-btn">Clear All Items</button>
+  </div>
+
+  <div id="authBanner" class="auth-banner"></div>
+
+  <script type="module" src="firebase-init.js"></script>
+  <script type="module" src="calculator-auth.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

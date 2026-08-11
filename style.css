@@ -207,3 +207,110 @@ td {
   font-weight: 700;
   font-size: 18px;
 }
+
+.error-box {
+  display: none;
+  margin-top: 12px;
+  padding: 12px;
+  background-color: rgba(226, 87, 76, 0.1);
+  border: 1px solid #E2574C;
+  border-radius: 8px;
+  color: #E2574C;
+  font-size: 13px;
+}
+
+.error-box.visible {
+  display: block;
+}
+
+.error-box ul {
+  margin: 0;
+  padding-left: 18px;
+}
+.auth-banner {
+  display: none;
+  margin-bottom: 16px;
+  padding: 10px 14px;
+  background-color: #111113;
+  border: 1px solid #22252B;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #8B8D93;
+  text-align: center;
+  width: 320px;
+}
+
+.auth-banner.visible {
+  display: block;
+}
+
+.auth-banner a {
+  color: #A855F7;
+}
+
+.input-wrap {
+  position: relative;
+}
+
+.input-wrap input {
+  padding-right: 32px;
+}
+
+.clear-field-btn {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: auto;
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: none;
+  color: #8B8D93;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.clear-field-btn:hover {
+  color: #E2574C;
+  background: none;
+}
+
+.clear-form-btn {
+  background-color: #111113;
+  color: #8B8D93;
+  border: 1px solid #22252B;
+}
+
+.clear-form-btn:hover {
+  background-color: #1A1B1E;
+}
+
+.clear-all-btn {
+  margin-top: 10px;
+  background-color: #111113;
+  color: #E2574C;
+  border: 1px solid #E2574C;
+}
+
+.clear-all-btn:hover {
+  background-color: #E2574C;
+  color: #F5F5F7;
+}
+
+.calc-navbar {
+  width: 320px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.home-link {
+  color: #8B8D93;
+  text-decoration: none;
+  font-size: 13px;
+}
+
+.home-link:hover {
+  color: #A855F7;
+}

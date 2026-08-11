@@ -3,89 +3,94 @@
 <head>
   <meta charset="UTF-8">
   <title>Reseller Profit Calculator</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="landing.css">
 </head>
 <body>
 
-  <div class="badge">● CALCULATOR STATUS: READY</div>
-
-  <h1>Know Your Margin.<br><span class="gradient-text">Before You List It.</span></h1>
-
-  <div class="card">
-    <label for="itemName">Item Name</label>
-    <input type="text" id="itemName" placeholder="e.g. Vintage Jacket">
-
-    <label for="currency">Currency</label>
-    <select id="currency">
-      <option value="USD">USD ($)</option>
-      <option value="CNY">CNY (¥)</option>
-    </select>
-
-    <label for="cost">Total Base Cost (<span class="currency-symbol">¥</span>)</label>
-    <input type="number" id="cost" step="any" placeholder="e.g. 500">
-
-    <label for="sell">Selling Price per Item ($)</label>
-    <input type="number" id="sell" step="any" placeholder="e.g. 25">
-
-    <label for="qty">Quantity</label>
-    <input type="number" id="qty" step="any" placeholder="e.g. 1">
-
-    <label for="weight">Weight (kg)</label>
-    <input type="number" id="weight" step="any" placeholder="e.g. 2">
-
-    <label for="rate">Shipping Rate (<span class="currency-symbol">$</span> per kg)</label>
-    <input type="number" id="rate" step="any" placeholder="e.g. 5">
-
-    <label for="platformFee">Platform Fee (%)</label>
-    <input type="number" id="platformFee" step="any" placeholder="e.g. 10">
-
-    <label for="platformFlatFee">Platform Flat Fee ($ per sale)</label>
-    <input type="number" id="platformFlatFee" step="any" value="0.45">
-
-    <label for="customs">Customs/Import Tax (<span class="currency-symbol">$</span> flat)</label>
-    <input type="number" id="customs" step="any" placeholder="e.g. 20">
-
-    <button id="calcBtn">Add Item</button>
-
-    <div class="edit-bar" id="editBar">
-      <button type="button" id="editBtn">Make Changes</button>
-      <button type="button" id="saveChangesBtn">Save Changes</button>
-      <button type="button" id="cancelEditBtn">Cancel</button>
-      <button type="button" id="newItemBtn">+ New Item</button>
+  <nav class="navbar">
+    <div class="logo">ProfitCalc</div>
+    <div class="nav-links">
+      <a href="calculator.html">Calculator</a>
+      <span id="userEmail" class="user-email" style="display:none;"></span>
+      <button id="signInBtn" class="nav-btn ghost">Sign In</button>
+      <button id="registerBtn" class="nav-btn solid">Register</button>
+      <button id="signOutBtn" class="nav-btn ghost" style="display:none;">Sign Out</button>
     </div>
+  </nav>
 
-    <div class="terminal">
-      <div class="terminal-header">
-        <span></span><span></span><span></span>
-        <span class="terminal-title">profit@calc — zsh</span>
+  <section class="hero">
+    <div class="badge">● BUILT FOR RESELLERS</div>
+    <h1>Helping Resellers.<br><span class="gradient-text">One Calculation At A Time.</span></h1>
+    <p class="subtext">Know your real profit before you list — cost, shipping, customs, and marketplace fees, all in one place.</p>
+    <a href="calculator.html" class="cta-btn">Try the Calculator →</a>
+  </section>
+
+  <section class="how-it-works">
+    <h2>How It Works</h2>
+    <div class="steps">
+      <div class="step-card">
+        <div class="step-number">1</div>
+        <h3>Enter Your Costs</h3>
+        <p>Base cost, weight, shipping rate, customs — whatever applies to your item.</p>
       </div>
-      <div class="terminal-body">
-        <div>$ run calculate-profit</div>
-        <div id="result" class="terminal-result">&gt; awaiting input...</div>
+      <div class="step-card">
+        <div class="step-number">2</div>
+        <h3>Pick Your Marketplace</h3>
+        <p>Depop, eBay, Vinted, Facebook Marketplace — fees fill in automatically.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-number">3</div>
+        <h3>See Your Real Profit</h3>
+        <p>Track multiple items, edit past entries, and see your total at a glance.</p>
       </div>
     </div>
+  </section>
 
-    <div class="items-list">
-      <table id="itemsTable">
-        <thead>
-          <tr>
-            <th>Item</th>
-            <th>Qty</th>
-            <th>Profit</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody id="itemsTableBody"></tbody>
-      </table>
+  <section class="features">
+    <h2>Built For How You Actually Resell</h2>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <h3>Multi-Currency</h3>
+        <p>Source in CNY, GBP, EUR, and more — converted live to USD.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Marketplace Presets</h3>
+        <p>Real, researched fee structures for the platforms you actually sell on.</p>
+      </div>
+      <div class="feature-card">
+        <h3>Multi-Item Tracking</h3>
+        <p>Add every item from a haul and see your grand total profit.</p>
+      </div>
     </div>
+  </section>
 
-    <div class="grand-total">
-      Grand Total: <span id="grandTotal">$0.00</span>
+  <section class="contact">
+    <h2>Get In Touch</h2>
+    <p>Questions, feedback, or feature requests:</p>
+    <a href="mailto:myronoarthur@gmail.com" class="contact-email">myronoarthur@gmail.com</a>
+  </section>
+
+  <footer>
+    <p>© 2026 ProfitCalc — Built by a reseller, for resellers.</p>
+  </footer>
+
+  <div id="authModal" class="modal-overlay">
+    <div class="modal">
+      <h3 id="modalTitle">Sign In</h3>
+      <input type="email" id="authEmail" placeholder="Email">
+     <input type="password" id="authPassword" placeholder="Password">
+<a href="#" id="forgotPasswordLink" class="forgot-link">Forgot password?</a>
+      <div id="authError" class="auth-error"></div>
+      <button id="authSubmitBtn">Sign In</button>
+      <button id="closeModalBtn" class="nav-btn ghost">Cancel</button>
     </div>
   </div>
-
-  <script src="script.js"></script>
+  
+  <script type="module" src="firebase-init.js"></script>
+  <script type="module" src="auth.js"></script>
+  
 </body>
 </html>

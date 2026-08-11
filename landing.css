@@ -1,0 +1,253 @@
+* {
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Inter', sans-serif;
+    background-color: #0A0A0B;
+    color: #F5F5F7;
+    margin: 0;
+  }
+  
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 60px;
+    border-bottom: 1px solid #22252B;
+  }
+  
+  .logo {
+    font-weight: 800;
+    font-size: 18px;
+  }
+  
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  
+  .nav-links a {
+    color: #F5F5F7;
+    text-decoration: none;
+    font-size: 14px;
+  }
+  
+  .nav-btn {
+    padding: 8px 18px;
+    border-radius: 6px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    border: none;
+  }
+  
+  .nav-btn.ghost {
+    background: none;
+    border: 1px solid #22252B;
+    color: #F5F5F7;
+  }
+  
+  .nav-btn.solid {
+    background-color: #A855F7;
+    color: #0A0A0B;
+  }
+  
+  .hero {
+    text-align: center;
+    padding: 100px 20px 80px;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  
+  .badge {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 1px;
+    color: #A855F7;
+    border: 1px solid #22252B;
+    background-color: #111113;
+    padding: 6px 14px;
+    border-radius: 20px;
+    margin-bottom: 24px;
+  }
+  
+  .hero h1 {
+    font-size: 44px;
+    font-weight: 800;
+    line-height: 1.25;
+    margin: 0 0 20px;
+  }
+  
+  .gradient-text {
+    background: linear-gradient(90deg, #A855F7, #7C3AED);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  
+  .subtext {
+    color: #8B8D93;
+    font-size: 16px;
+    margin-bottom: 32px;
+  }
+  
+  .cta-btn {
+    display: inline-block;
+    background-color: #F5F5F7;
+    color: #0A0A0B;
+    padding: 14px 28px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 15px;
+  }
+  
+  .cta-btn:hover {
+    background-color: #d8d8db;
+  }
+  
+  section h2 {
+    text-align: center;
+    font-size: 28px;
+    margin-bottom: 40px;
+  }
+  
+  .how-it-works, .features {
+    padding: 60px 20px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  
+  .steps, .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  
+  .step-card, .feature-card {
+    background-color: #111113;
+    border: 1px solid #22252B;
+    border-radius: 12px;
+    padding: 24px;
+  }
+  
+  .step-number {
+    color: #A855F7;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  
+  .step-card h3, .feature-card h3 {
+    margin: 0 0 8px;
+    font-size: 16px;
+  }
+  
+  .step-card p, .feature-card p {
+    color: #8B8D93;
+    font-size: 14px;
+    margin: 0;
+  }
+  
+  .contact {
+    text-align: center;
+    padding: 60px 20px;
+  }
+  
+  .contact p {
+    color: #8B8D93;
+    margin-bottom: 12px;
+  }
+  
+  .contact-email {
+    color: #A855F7;
+    font-size: 18px;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  
+  footer {
+    text-align: center;
+    padding: 30px 20px;
+    border-top: 1px solid #22252B;
+    color: #8B8D93;
+    font-size: 13px;
+  }
+  
+  @media (max-width: 700px) {
+    .steps, .feature-grid {
+      grid-template-columns: 1fr;
+    }
+    .navbar {
+      padding: 16px 20px;
+    }
+  }
+
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.6);
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .modal-overlay.visible {
+    display: flex;
+  }
+  
+  .modal {
+    background-color: #111113;
+    border: 1px solid #22252B;
+    border-radius: 12px;
+    padding: 30px;
+    width: 300px;
+  }
+  
+  .modal h3 {
+    margin-top: 0;
+  }
+  
+  .modal input {
+    width: 100%;
+    box-sizing: border-box;
+    background-color: #0A0A0B;
+    border: 1px solid #22252B;
+    color: #F5F5F7;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+  }
+  
+  .modal button {
+    width: 100%;
+    margin-top: 6px;
+  }
+  
+  .auth-error {
+    color: #E2574C;
+    font-size: 13px;
+    margin-bottom: 10px;
+  }
+  
+  .user-email {
+    color: #8B8D93;
+    font-size: 13px;
+  }
+
+  .forgot-link {
+    display: block;
+    font-size: 12px;
+    color: #8B8D93;
+    margin-bottom: 14px;
+    text-decoration: none;
+  }
+  
+  .forgot-link:hover {
+    color: #A855F7;
+  }
