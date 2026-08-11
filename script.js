@@ -272,6 +272,27 @@ editBtn.addEventListener("click", function () {
   newItemBtn.style.display = "none";
 });
 
+document.querySelectorAll(".tooltip-icon").forEach(function (icon) {
+  icon.addEventListener("click", function (e) {
+    e.stopPropagation();
+    const wasOpen = icon.classList.contains("open");
+
+    document.querySelectorAll(".tooltip-icon").forEach(function (i) {
+      i.classList.remove("open");
+    });
+
+    if (!wasOpen) {
+      icon.classList.add("open");
+    }
+  });
+});
+
+document.addEventListener("click", function () {
+  document.querySelectorAll(".tooltip-icon").forEach(function (icon) {
+    icon.classList.remove("open");
+  });
+});
+
 saveChangesBtn.addEventListener("click", async function () {
   const errors = validateForm();
   showErrors(errors);

@@ -329,3 +329,66 @@ td {
   width: 22px;
   height: 22px;
 }
+
+@media (max-width: 400px) {
+  body {
+    padding: 30px 12px;
+  }
+
+  h1 {
+    font-size: 30px;
+  }
+
+  .card {
+    width: 100%;
+    padding: 20px;
+  }
+
+  .calc-navbar {
+    width: 100%;
+  }
+
+  table {
+    font-size: 12px;
+  }
+
+  th, td {
+    padding: 6px 2px;
+  }
+}
+
+.tooltip-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background-color: #22252B;
+  color: #8B8D93;
+  font-size: 10px;
+  cursor: help;
+  position: relative;
+  margin-left: 4px;
+}
+
+.tooltip-text {
+  display: none;
+  position: absolute;
+  bottom: 130%;
+  left: 0;
+  width: 200px;
+  background-color: #1A1B1E;
+  border: 1px solid #22252B;
+  color: #F5F5F7;
+  font-size: 12px;
+  font-weight: 400;
+  padding: 8px 10px;
+  border-radius: 6px;
+  z-index: 10;
+  line-height: 1.4;
+}
+
+.tooltip-icon.open .tooltip-text {
+  display: block;
+}

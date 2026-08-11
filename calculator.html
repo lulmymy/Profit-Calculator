@@ -65,7 +65,11 @@
       <button type="button" class="clear-field-btn" data-target="qty">✕</button>
     </div>
 
-    <label for="weight">Weight (kg)</label>
+    <label for="weight">Weight (kg)
+      <span class="tooltip-icon">?
+        <span class="tooltip-text">Used with your Shipping Rate below to calculate total shipping cost: Weight × Rate per kg.</span>
+      </span>
+    </label>
     <div class="input-wrap">
       <input type="number" id="weight" step="any" placeholder="e.g. 2">
       <button type="button" class="clear-field-btn" data-target="weight">✕</button>
@@ -83,13 +87,21 @@
       <button type="button" class="clear-field-btn" data-target="platformFee">✕</button>
     </div>
 
-    <label for="platformFlatFee">Platform Flat Fee ($ per sale)</label>
+    <label for="platformFlatFee">Platform Flat Fee ($ per sale)
+      <span class="tooltip-icon">?
+        <span class="tooltip-text">A fixed fee some marketplaces charge per transaction, on top of their percentage fee — e.g. Depop charges $0.45 per sale in the US.</span>
+      </span>
+    </label>
     <div class="input-wrap">
       <input type="number" id="platformFlatFee" step="any" value="0.45">
       <button type="button" class="clear-field-btn" data-target="platformFlatFee">✕</button>
     </div>
 
-    <label for="customs">Customs/Import Tax (<span class="currency-symbol">$</span> flat)</label>
+    <label for="customs">Customs/Import Tax (<span class="currency-symbol">$</span> flat)
+      <span class="tooltip-icon">?
+        <span class="tooltip-text">A flat fee charged by customs/import services on top of shipping, separate from your carrier's per-kg rate.</span>
+      </span>
+    </label>
     <div class="input-wrap">
       <input type="number" id="customs" step="any" placeholder="e.g. 20">
       <button type="button" class="clear-field-btn" data-target="customs">✕</button>
